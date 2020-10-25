@@ -4,8 +4,13 @@
 
 {% block body %}
     <div class="container">
-        <h1>{{ title }}</h1>
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-        {{ form_end(form) }}
+        <div class="row">
+            <div class=".col-sm">
+                <h1>{{ title }}</h1>
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
+    <button type="button" class="btn btn-link"><a href="{{ url('list_books') }}"><i class="far fa-caret-square-left" style="font-size: 48px;"></i></a></button>
 {% endblock %}
