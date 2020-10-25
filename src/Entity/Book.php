@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
@@ -19,16 +19,39 @@ class Book
     private int $id;
 
     /**
+     * @Assert\NotBlank(
+     *     message="Заполните название"
+     * )
+     * @Assert\Length(
+     *     max="255",
+     *     maxMessage="Максимальное количество символов в названии: 255"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private string $title;
 
     /**
-     * @ORM\Column(type="date")
+     * @Assert\NotNull(
+     *     message="Заполните год"
+     * )
+     * @Assert\NotBlank(
+     *     message="Заполните год"
+     * )
+     * @Assert\Positive(
+     *     message="Значение года должно быть положительным (в данной версии приложения нет возможности добавлять книги с годом написания до н.э.)"
+     * )
+     * @ORM\Column(type="smallint")
      */
-    private DateTimeInterface $year;
+    private int $year;
 
     /**
+     * @Assert\NotBlank(
+     *     message="Заполните имя автора"
+     * )
+     * @Assert\Length(
+     *     max="255",
+     *     maxMessage="Максимальное количество символов в имени автора: 64"
+     * )
      * @ORM\Column(type="string", length=64)
      */
     private string $author;
@@ -50,12 +73,12 @@ class Book
         return $this;
     }
 
-    public function getYear(): ?DateTimeInterface
+    public function getYear(): ?int
     {
         return $this->year;
     }
 
-    public function setYear(DateTimeInterface $year): self
+    public function setYear(int $year): self
     {
         $this->year = $year;
 
